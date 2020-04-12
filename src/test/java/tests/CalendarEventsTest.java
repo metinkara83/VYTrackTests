@@ -23,11 +23,16 @@ public class CalendarEventsTest extends TestBase{
         logger = report.createTest("Verify that \"view\",\"edit\" and \"delete\" options are available.");
         BrowserUtilities.waitForPageToLoad(30L);
         CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
+        logger.info("Hover over on \"Activities\" tab and select \"Calendar Events\" module");
         calendarEventsPage.navigateTo("Activities", "Calendar Events");
+        logger.info("Find \"Testers Meeting\" title and then hover over the related three dots.");
         a.moveToElement(calendarEventsPage.getThreeDotElement("Testers Meeting")).pause(2000).build().perform();
         List<String> expectedMenu = Arrays.asList("View","Edit","Delete");
+        logger.info("Verify \"View\", \"Edit\" and \"Delete\" options are available and displayed.");
         Assert.assertEquals(calendarEventsPage.getActionsMenuItemsText(),expectedMenu);
+        logger.pass("\"View\", \"Edit\" and \"Delete\" options are available.");
         Assert.assertTrue(calendarEventsPage.getActionsMenu().isDisplayed());
+        logger.pass("\"View\", \"Edit\" and \"Delete\" options are displayed.");
     }
 
     @Test(dependsOnMethods = {"test1"})
