@@ -17,11 +17,12 @@ import java.util.List;
 
 public class CalendarEventsTest extends TestBase{
     private Actions a = new Actions(Driver.getDriver());
-    private CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
-    @Test
+
+    @Test(priority = 0)
     public void test1(){
         logger = report.createTest("Verify that \"view\",\"edit\" and \"delete\" options are available.");
         BrowserUtilities.waitForPageToLoad(30L);
+        CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
         calendarEventsPage.navigateTo("Activities", "Calendar Events");
         a.moveToElement(calendarEventsPage.getThreeDotElement("Testers Meeting")).pause(2000).build().perform();
         List<String> expectedMenu = Arrays.asList("View","Edit","Delete");
@@ -29,20 +30,22 @@ public class CalendarEventsTest extends TestBase{
         Assert.assertTrue(calendarEventsPage.getActionsMenu().isDisplayed());
     }
 
-    @Test
+    @Test(dependsOnMethods = {"test1"})
     public void test2(){
         logger = report.createTest("Verify that \"title\" column still displayed.");
         BrowserUtilities.waitForPageToLoad(30L);
+        CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
         calendarEventsPage.navigateTo("Activities", "Calendar Events");
         calendarEventsPage.getGridSettingsButton().click();
         calendarEventsPage.deselectGridSettingsDropdownTableCheckbox();
         Assert.assertEquals(calendarEventsPage.getPageTableHeaderTitleText(),"TITLE");
     }
 
-    @Test
+    @Test(dependsOnMethods = {"test2"})
     public void test3(){
         logger = report.createTest("Verify that \"Save And Close\", \"Save And New\", \"Save\" options are available.");
         BrowserUtilities.waitForPageToLoad(30L);
+        CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
         calendarEventsPage.navigateTo("Activities", "Calendar Events");
         calendarEventsPage.clickOnCreateCalendarEventButton();
         calendarEventsPage.getSaveAndCloseExpandButton().click();
@@ -50,10 +53,11 @@ public class CalendarEventsTest extends TestBase{
         Assert.assertEquals(calendarEventsPage.getSaveCloseExpandedButtons(),expectedResults);
     }
 
-    @Test
+    @Test(dependsOnMethods = {"test3"})
     public void test4(){
         logger = report.createTest("Verify that \"All Calendar Events\" page subtitle is displayed.");
         BrowserUtilities.waitForPageToLoad(30L);
+        CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
         calendarEventsPage.navigateTo("Activities", "Calendar Events");
         calendarEventsPage.clickOnCreateCalendarEventButton();
         calendarEventsPage.clickOnCancelButton();
@@ -61,29 +65,32 @@ public class CalendarEventsTest extends TestBase{
         Assert.assertEquals(calendarEventsPage.getCalendarEventsPageSubtitle().getText(),expected);
     }
 
-    @Test
+    @Test(dependsOnMethods = {"test4"})
     public void test5(){
         logger = report.createTest("Verify that difference between end and start time is exactly 1 hour.");
         BrowserUtilities.waitForPageToLoad(30L);
+        CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
         calendarEventsPage.navigateTo("Activities", "Calendar Events");
         calendarEventsPage.clickOnCreateCalendarEventButton();
         Assert.assertTrue(calendarEventsPage.getHourDifference()==1);
     }
 
-    @Test
+    @Test(dependsOnMethods = {"test5"})
     public void test6(){
         logger = report.createTest("Verify that end time equals to 10.");
         BrowserUtilities.waitForPageToLoad(30L);
+        CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
         calendarEventsPage.navigateTo("Activities", "Calendar Events");
         calendarEventsPage.clickOnCreateCalendarEventButton();
         calendarEventsPage.select9AMStartHour();
         Assert.assertEquals(calendarEventsPage.getEndHour().getAttribute("value"),"10:00 AM");
     }
 
-    @Test
+    @Test(dependsOnMethods = {"test6"})
     public void test7(){
         logger = report.createTest("Verify that \"All Day Event\" checkbox is selected.");
         BrowserUtilities.waitForPageToLoad(30L);
+        CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
         calendarEventsPage.navigateTo("Activities", "Calendar Events");
         calendarEventsPage.clickOnCreateCalendarEventButton();
         calendarEventsPage.selectAllDayEventCheckbox();
@@ -94,10 +101,11 @@ public class CalendarEventsTest extends TestBase{
         Assert.assertTrue(calendarEventsPage.getEndDateInput().isDisplayed());
     }
 
-    @Test
+    @Test(dependsOnMethods = {"test7"})
     public void test8(){
         logger = report.createTest("Verify that \"Repeat\" checkbox is selected.");
         BrowserUtilities.waitForPageToLoad(30L);
+        CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
         calendarEventsPage.navigateTo("Activities", "Calendar Events");
         calendarEventsPage.clickOnCreateCalendarEventButton();
         calendarEventsPage.selectRepeatCheckbox();
@@ -107,10 +115,11 @@ public class CalendarEventsTest extends TestBase{
         Assert.assertEquals(calendarEventsPage.getSelectDropdownElementList(),expected);
     }
 
-    @Test
+    @Test(dependsOnMethods = {"test8"})
     public void test9(){
         logger = report.createTest("Verify that \"Repeat\" checkbox and related radioboxes are selected.");
         BrowserUtilities.waitForPageToLoad(30L);
+        CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
         calendarEventsPage.navigateTo("Activities", "Calendar Events");
         calendarEventsPage.clickOnCreateCalendarEventButton();
         calendarEventsPage.selectRepeatCheckbox();
@@ -120,10 +129,11 @@ public class CalendarEventsTest extends TestBase{
         Assert.assertEquals(calendarEventsPage.getSummaryMessageText(),"Daily every 1 day");
     }
 
-    @Test
+    @Test(dependsOnMethods = {"test9"})
     public void test10(){
         logger = report.createTest("Verify that \"Repeat\" checkbox and after radio box are selected.");
         BrowserUtilities.waitForPageToLoad(30L);
+        CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
         calendarEventsPage.navigateTo("Activities", "Calendar Events");
         calendarEventsPage.clickOnCreateCalendarEventButton();
         calendarEventsPage.selectRepeatCheckbox();
@@ -137,10 +147,11 @@ public class CalendarEventsTest extends TestBase{
         Assert.assertEquals(actual,expected);
     }
 
-    @Test
+    @Test(dependsOnMethods = {"test10"})
     public void test11(){
         logger = report.createTest("Verify that \"Repeat\" checkbox and ends radio box are selected.");
         BrowserUtilities.waitForPageToLoad(30L);
+        CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
         calendarEventsPage.navigateTo("Activities", "Calendar Events");
         calendarEventsPage.clickOnCreateCalendarEventButton();
         calendarEventsPage.selectRepeatCheckbox();
@@ -154,10 +165,11 @@ public class CalendarEventsTest extends TestBase{
         Assert.assertEquals(actual,expected);
     }
 
-    @Test
+    @Test(dependsOnMethods = {"test11"})
     public void test12(){
         logger = report.createTest("Verify that \"Repeat Weekly\" is selected.");
         BrowserUtilities.waitForPageToLoad(30L);
+        CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
         calendarEventsPage.navigateTo("Activities", "Calendar Events");
         calendarEventsPage.clickOnCreateCalendarEventButton();
         calendarEventsPage.selectRepeatCheckbox();
